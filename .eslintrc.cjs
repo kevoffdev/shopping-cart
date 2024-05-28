@@ -25,9 +25,10 @@ module.exports = {
         "tabWidth": 2,
         "semi": true,
         "singleQuote": false,
-        "bracketSpacing": false,
+        "bracketSpacing": true,
         "arrowParens": "always",
-        "endOfLine":"auto"
+        "endOfLine":"auto",
+        // "plugins": ["prettier-plugin-tailwindcss"],
       }
     ],
     "import/order": ["warn", {
