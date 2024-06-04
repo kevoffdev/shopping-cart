@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
-
+import { useFilter } from "./hooks/useFilter";
+import { Products } from "./components/Products";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { getProducts } from "./services/api";
-import { Product } from "./types";
-import { Products } from "./components/Products";
+import { Cart } from "./components/Cart";
+import { CartProvider } from "./context/cart";
 
 export function App() {
-  const [products, setProducts] = useState<null | Product[]>(null);
-
-  useEffect(() => {
-    getProducts().then((resp) => setProducts(resp));
-  }, []);
+  const { products } = useFilter();
 
   return (
-    <div className="mx-auto grid min-h-screen max-w-screen-lg grid-rows-[auto,1fr,50px]">
-      <Header />
-      {products ? <Products products={products} /> : <div>loading...</div>}
-      <Footer />
-    </div>
+    <CartProvider>
+      <div className="mx-auto grid min-h-screen max-w-screen-lg grid-rows-[auto,auto,1fr,50px]">
+        <Header />
+        <Cart />
+        {products ? <Products /> : <div>loading...</div>}
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }
 

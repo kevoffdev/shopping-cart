@@ -1,46 +1,35 @@
-import { OptionCategorie, Product } from "../types";
-import { getCategories } from "../helpers/getCategories";
-import { getMinMaxPrice } from "../helpers/getMinMaxPrice";
+import { OptionCategorie } from "../types";
+import { useFilter } from "../hooks/useFilter";
 
-interface FiltersProps {
-  products: Product[];
-  onChangeCategorie: (value: string) => void;
-  selectedCategorie: string;
-  price: number;
-  onChangePrice: (value: number) => void;
-}
+export const Filters = () => {
+  const { filters, categories, setFilters } = useFilter();
 
-export const Filters = ({
-  products,
-  onChangeCategorie,
-  selectedCategorie,
-  price,
-  onChangePrice,
-}: FiltersProps) => {
-  const { minPrice, maxPrice } = getMinMaxPrice(products);
-  const categories = getCategories(products);
+  const onChangeSelectedCategorie = (value: string | OptionCategorie) => {
+    setFilters({ ...filters, categorie: value });
+  };
+  const onChangePrice = (value: number) => {
+    setFilters({ ...filters, price: value });
+  };
 
   return (
     <div className="flex justify-between mb-3">
       <div className="relative w-52">
-        <label className="" htmlFor="labels-range-input">
-          Precio: ${price}
-        </label>
+        <label htmlFor="labels-range-input">Precio: ${filters.price}</label>
         <input
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
           id="labels-range-input"
-          max={maxPrice}
-          min={minPrice}
+          max={filters.maxPrice}
+          min={filters.minPrice}
           type="range"
-          value={price}
+          value={filters.price}
           onChange={(e) => onChangePrice(Number(e.target.value))}
         />
         <div className="flex justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-400 start-0 -bottom-6">
-            Min (${minPrice})
+            Min (${filters.minPrice})
           </span>
           <span className="text-sm text-gray-500 dark:text-gray-400 end-0 -bottom-6">
-            Max (${maxPrice})
+            Max (${filters.maxPrice})
           </span>
         </div>
       </div>
@@ -48,8 +37,8 @@ export const Filters = ({
         <p>Categories: </p>
         <select
           className="border border-white"
-          value={selectedCategorie}
-          onChange={(e) => onChangeCategorie(e.target.value)}
+          value={filters.categorie}
+          onChange={(e) => onChangeSelectedCategorie(e.target.value)}
         >
           <option value={OptionCategorie.All}>{OptionCategorie.All}</option>
           {categories.map((categorie) => {

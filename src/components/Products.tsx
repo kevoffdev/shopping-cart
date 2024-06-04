@@ -1,42 +1,25 @@
-import { useState } from "react";
-
-import { OptionCategorie, Product } from "../types";
-import { getMinMaxPrice } from "../helpers/getMinMaxPrice";
+import { Product } from "../types";
+import { useFilter } from "../hooks/useFilter";
+import { useCart } from "../hooks/useCart";
 
 import { Filters } from "./Filters";
-import { AddToCartIcon } from "./Icon";
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icon";
 
-export const Products = ({ products }: { products: Product[] }) => {
-  const prices = getMinMaxPrice(products);
-  const [price, setPrice] = useState(Math.floor(prices.maxPrice / 2));
-  const [selectedCategorie, setSelectedCategorie] = useState<string | OptionCategorie>(
-    OptionCategorie.All,
-  );
-  const onChangeSelectedCategorie = (value: string | OptionCategorie) => {
-    setSelectedCategorie(value);
-  };
-  const onChangePrice = (value: number) => {
-    setPrice(value);
-  };
+export const Products = () => {
+  const { filterProducts } = useFilter();
+  const { cart, quantity, addToCart, removeFromCart } = useCart();
 
-  const newProducts = products.filter((product) => {
-    return (
-      product.price <= price &&
-      (selectedCategorie === product.category || selectedCategorie === OptionCategorie.All)
-    );
-  });
+  const checkProductInCart = (product: Product) => {
+    return cart.some((item) => item.id === product.id);
+  };
 
   return (
     <main className="my-4">
-      <Filters
-        price={price}
-        products={products}
-        selectedCategorie={selectedCategorie}
-        onChangeCategorie={onChangeSelectedCategorie}
-        onChangePrice={onChangePrice}
-      />
+      <Filters />
       <section className="grid grid-cols-4 gap-4">
-        {newProducts.map((product) => {
+        {filterProducts().map((product) => {
+          const isProductInCart = checkProductInCart(product);
+
           return (
             <article
               key={product.id}
@@ -51,9 +34,20 @@ export const Products = ({ products }: { products: Product[] }) => {
                 <strong className="opacity-90">
                   {product.title} - ${product.price}
                 </strong>
+                <p>
+                  Quantity:{" "}
+                  {quantity[product.id] > 0 ? product.stock - quantity[product.id] : product.stock}
+                </p>
               </div>
               <div className="text-center">
-                <button className="p-3 my-2 bg-gray-700 rounded-lg">{<AddToCartIcon />}</button>
+                <button
+                  className={`p-3 my-2 bg-gray-700 rounded-xl ${isProductInCart ? "hover:text-red-400" : "hover:text-green-400"} transition`}
+                  onClick={
+                    isProductInCart ? () => removeFromCart(product.id) : () => addToCart(product)
+                  }
+                >
+                  {isProductInCart ? <RemoveFromCartIcon /> : <AddToCartIcon />}
+                </button>
               </div>
             </article>
           );

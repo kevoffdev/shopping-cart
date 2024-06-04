@@ -1,8 +1,10 @@
 export const Header = () => {
   return (
-    <header className="px-10 py-3 border-2">
+    <header className="py-3 mt-2 text-center">
       <nav>
-        <p className="text-xl font-bold">Shopping Cart</p>
+        <p className="flex items-center justify-center gap-3 text-4xl font-bold">
+          Shopping Cart 🛒
+        </p>
       </nav>
     </header>
   );
