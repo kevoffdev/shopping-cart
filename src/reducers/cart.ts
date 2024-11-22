@@ -26,6 +26,7 @@ export const cartReducer = (state: StateCart, action: CartAction) => {
     case CART_ACTION.REMOVE_FROM_CART: {
       const id = action.value;
       const { [id]: _, ...items } = state.quantity;
+
       const newState = {
         ...state,
         cart: state.cart.filter((itemCart) => itemCart.id !== id),
@@ -54,18 +55,7 @@ export const cartReducer = (state: StateCart, action: CartAction) => {
     }
 
     case CART_ACTION.DECREMENT_PRODUCT_CART: {
-      if (state.quantity[action.value] === 1) {
-        const { [action.value]: _, ...items } = state.quantity;
-        const newState = {
-          ...state,
-          cart: state.cart.filter((itemCart) => itemCart.id !== action.value),
-          quantity: items,
-        };
-
-        window.localStorage.setItem("cart", JSON.stringify(newState));
-
-        return newState;
-      }
+      if (state.quantity[action.value] === 1) return state;
       const newState = {
         ...state,
         quantity: { ...state.quantity, [action.value]: state.quantity[action.value] - 1 },
