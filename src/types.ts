@@ -1,5 +1,5 @@
 export enum OptionCategorie {
-  All = "All",
+  All = "All Products",
 }
 
 export interface Product {
