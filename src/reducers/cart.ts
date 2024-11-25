@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 import { StateCart } from "../context/cart";
 import { CART_ACTION, CartAction } from "../types";
 
@@ -26,6 +28,15 @@ export const cartReducer = (state: StateCart, action: CartAction) => {
     case CART_ACTION.REMOVE_FROM_CART: {
       const id = action.value;
       const { [id]: _, ...items } = state.quantity;
+
+      const data = state.cart.find((product) =>
+        product.id === id ? product.title : "No se encontro",
+      );
+
+      toast.success(`${data?.title}`, {
+        description: "Product removed from cart",
+        className: "text-red-500",
+      });
 
       const newState = {
         ...state,
