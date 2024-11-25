@@ -1,7 +1,7 @@
 import { useCart } from "../hooks/useCart";
+import { Button } from "../ui/button";
 
 import { CartIcon, Trash } from "./Icon";
-import { Button } from "./ui/button";
 
 import {
   Sheet,
@@ -10,12 +10,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from "@/ui/sheet";
 
 export const Cart = () => {
   const { cart, quantity, removeFromCart, incrementProductCart, decrementProductCart } = useCart();
-
-  const totalProducts = Object.keys(quantity);
 
   const sumTotalProducts = cart
     .reduce(
@@ -34,12 +32,8 @@ export const Cart = () => {
       </div>
       <SheetContent className="w-[250px] md:w-full overflow-auto bg-background text-primary">
         <SheetHeader>
-          <SheetTitle>Cart</SheetTitle>
+          <SheetTitle className="py-4 text-2xl font-bold border-b">Cart</SheetTitle>
         </SheetHeader>
-        <SheetDescription className="flex flex-col gap-2">
-          <span>Products in the cart: {totalProducts.length}</span>
-          <span>Total price ${sumTotalProducts}</span>
-        </SheetDescription>
         <div className="text-primary">
           <ul className="p-4">
             {cart.length > 0 ? (
@@ -52,7 +46,7 @@ export const Cart = () => {
                     <div className="flex flex-col items-center justify-center gap-2 md:flex-row">
                       <img
                         alt={item.title}
-                        className="object-contain w-12 h-10 border rounded-lg border-foreground"
+                        className="object-contain w-12 h-16 border rounded-lg border-foreground"
                         src={item.thumbnail}
                       />
                     </div>
@@ -92,6 +86,9 @@ export const Cart = () => {
             )}
           </ul>
         </div>
+        <SheetDescription className="flex flex-col gap-2 text-foreground">
+          <span className="py-2 text-lg font-semibold">Total price ${sumTotalProducts}</span>
+        </SheetDescription>
       </SheetContent>
     </Sheet>
   );
