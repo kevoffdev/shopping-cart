@@ -9,7 +9,7 @@ const AppRouter = () => {
       <Route element={<Home />} path="/" />
       <Route element={<Product />} path="/:id" />
 
-      <Route element={<Navigate to="/panel/admin" />} path="/*" />
+      <Route element={<Navigate to="/" />} path="/*" />
     </Routes>
   );
 };
