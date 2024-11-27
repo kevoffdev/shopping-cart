@@ -20,7 +20,9 @@ const ProductDetail = () => {
   if (!product) {
     return (
       <Layout>
-        <p>Product not found</p>
+        <div className="flex flex-col items-center h-full mt-20">
+          <h2 className="flex font-bold border-b-2">Product not found</h2>
+        </div>
       </Layout>
     );
   }
