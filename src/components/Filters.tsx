@@ -1,19 +1,38 @@
+import { useLocation, useNavigate } from "react-router";
+import { useState } from "react";
+
 import { OptionCategorie } from "../types";
 import { useFilter } from "../hooks/useFilter";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Slider } from "@/ui/slider";
+import { Input } from "@/ui/input";
+import { Button } from "@/ui/button";
 
 export const Filters = () => {
+  const [search, setSearch] = useState(
+    new URLSearchParams(useLocation().search).get("query") ?? "",
+  );
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const onChange = (value: string) => {
+    setSearch(value);
+    value ? navigate(`${pathname}?query=${value}`) : navigate(pathname);
+  };
+
   return (
     <div className="flex flex-col justify-between gap-4 mb-4 sm:flex-row">
       <SliderPrice />
+      <div className="flex items-center space-x-2">
+        <Input
+          placeholder="Search products"
+          type="search"
+          value={search}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <Button type="submit">Search</Button>
+      </div>
       <SelectCategories />
     </div>
   );
