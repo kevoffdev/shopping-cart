@@ -58,16 +58,16 @@ export const Cart = () => {
                       <div className="grid grid-cols-3 place-items-center">
                         <Button
                           className="w-full md:w-auto"
-                          onClick={() => incrementProductCart(item.id, item.stock)}
+                          onClick={() => decrementProductCart(item.id)}
                         >
-                          +
+                          -
                         </Button>
                         <small>{quantity[item.id]}</small>
                         <Button
                           className="w-full md:w-auto"
-                          onClick={() => decrementProductCart(item.id)}
+                          onClick={() => incrementProductCart(item.id, item.stock)}
                         >
-                          -
+                          +
                         </Button>
                       </div>
                       <Button
