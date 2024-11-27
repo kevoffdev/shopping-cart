@@ -9,7 +9,13 @@ export const Home = () => {
   return (
     <Layout>
       <Filters />
-      {products ? <Products /> : <div>loading...</div>}
+      {products ? (
+        <Products />
+      ) : (
+        <div className="flex flex-col items-center h-full mt-20">
+          <h2 className="flex font-bold border-b-2">Loading...</h2>
+        </div>
+      )}
     </Layout>
   );
 };
