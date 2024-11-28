@@ -13,7 +13,6 @@ Este proyecto es una **aplicación web de carrito de compras** que permite a los
 - **Detalles del producto:** Al hacer clic en la imagen del producto, se abre una página con:
   - Descripción detallada.
   - Precio, calificación, disponibilidad y dimensiones.
-  - Política de devoluciones.
   - **Reseñas de clientes**.
   - Productos relacionados.
 
@@ -48,3 +47,6 @@ Este proyecto es una **aplicación web de carrito de compras** que permite a los
 4. Entre al servidor: 
 
    http://localhost:5173
+
+## 🌟 Captura de pantalla
+![image](https://i.gyazo.com/1050fd06f04815290061108d08acbc14.png)
